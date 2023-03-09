@@ -194,7 +194,7 @@ export type Auth = typeof auth;
 ```ts
 // src/hooks.server.ts
 import { handleHooks } from "@lucia-auth/sveltekit";
-import { auth } from "../lib/server/lucia";
+import { auth } from "$lib/server/lucia";
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = handleHooks(auth)
@@ -237,11 +237,26 @@ git add .
 git commit -m "Created lucia logic, hook and types"
 ```
 
-5. Create Authentication form and server side logic to get started
+1. Create server user load on main +layout.server.ts
 
 ```fish
 # start server to have types generated for you
 npm run dev
+```
+
+```ts
+import type { LayoutServerLoad } from "./$types"
+
+export const load: LayoutServerLoad = async ({ locals }) => {
+	const { user, session } = await locals.validateUser()
+	return { user }
+}
+```
+
+```svelte
+<script>
+  export let data; // {user: null}
+</script>
 ```
 
 
