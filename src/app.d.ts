@@ -10,7 +10,7 @@ declare global {
 		interface Locals {
 			validate: import("@lucia-auth/sveltekit").Validate
 			validateUser: import("@lucia-auth/sveltekit").ValidateUser
-			setSesstion: import("@lucia-auth/sveltekit").SetSession
+			setSession: import("@lucia-auth/sveltekit").SetSession
 		}
 	}
 	var prisma: PrismaClient
