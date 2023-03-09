@@ -166,7 +166,7 @@ git add .
 git commit -m "Created prisma client and prisma client type"
 ```
 
-1. set up lucia server logic, lucia hooks and lucia types
+4. set up lucia server logic, lucia hook and lucia types
 
 ```ts
 // $lib/server/lucia.ts 
@@ -174,6 +174,7 @@ git commit -m "Created prisma client and prisma client type"
 import lucia from "lucia-auth";
 import prismaAdapter from "@lucia-auth/adapter-prisma";
 import { dev } from "$app/environment";
+import { prisma } from "$lib/server/prisma"
 
 export const auth = lucia({
     adapter: prismaAdapter(prisma),
@@ -188,11 +189,10 @@ export const auth = lucia({
 })
 
 export type Auth = typeof auth;
-
 ```
 
 ```ts
-// src/routes/hooks.server.ts
+// src/hooks.server.ts
 import { handleHooks } from "@lucia-auth/sveltekit";
 import { auth } from "../lib/server/lucia";
 import type { Handle } from "@sveltejs/kit";
@@ -231,6 +231,19 @@ declare global {
 export {};
 ```
 
+```fish
+# commit
+git add .
+git commit -m "Created lucia logic, hook and types"
+```
+
+5. Create Authentication form and server side logic to get started
+
+```fish
+# start server to have types generated for you
+npm run dev
+```
+
 
 
 
@@ -243,6 +256,7 @@ export {};
 ## Ressouces 
 - [Lucia prisma schema requirements](https://lucia-auth.com/learn/adapters/prisma)
 - [Lucia docs on Sveltekit integration](https://lucia-auth.com/sveltekit/start-here/getting-started)
+- [Start dev server for type generation](https://stackoverflow.com/questions/74060175/sveltekit-import-type-layoutserverload-pageload)
 
 
 
