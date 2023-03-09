@@ -237,7 +237,7 @@ git add .
 git commit -m "Created lucia logic, hook and types"
 ```
 
-1. Create server user load on main +layout.server.ts
+5. Create server user load on main +layout.server.ts
 
 ```fish
 # start server to have types generated for you
@@ -258,7 +258,8 @@ export const load: LayoutServerLoad = async ({ locals }) => {
   export let data; // {user: null}
 </script>
 ```
-
+6. Created Register page and registered 1st user!
+7. 
 
 
 
