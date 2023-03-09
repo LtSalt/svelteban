@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // fields required by lucia
+  id      String    @id @unique
+  session Session[]
+  Key     Key[]
+
+  // custom fields 
+  username String @unique
+  email    String @unique
+
+  // connections
+  boards   Board[]
+  taglists Taglist[]
+  tags     Tag[]
+  tasks    Task[]
+
+  // preferences
+  theme           String @default("light")
+  activeBoardId   Int?
+  activeTaglistId Int    @default(1)
+
+  @@map("user")
+}
+
+model Session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("session")
+}
+
+model Key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  primary         Boolean
+  expires         BigInt?
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("key")
+}
+
+model Board {
+  id       Int    @id @default(autoincrement())
+  title    String
+  user     User   @relation(fields: [username], references: [username])
+  username String
+
+  @@unique([username, title])
+}
+
+model Taglist {
+  id       Int    @id @default(autoincrement())
+  title    String
+  tags     Tag[]
+  user     User   @relation(fields: [username], references: [username])
+  username String
+
+  @@unique([username, title])
+}
+
+model Tag {
+  id        Int     @id @default(autoincrement())
+  title     String
+  taglist   Taglist @relation(fields: [taglistId], references: [id])
+  taglistId Int
+  user      User    @relation(fields: [username], references: [username])
+  username  String
+
+  @@unique([username, title])
+}
+
+model Task {
+  id       Int    @id @default(autoincrement())
+  title    String
+  user     User   @relation(fields: [username], references: [username])
+  username String
+}
