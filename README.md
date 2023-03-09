@@ -127,7 +127,7 @@ git add prisma
 git commit -m "Created prisma schema and pushed it to db."
 ```
 
-3. set up prisma types and create client to not reinstantiate client on hot reload
+3. create client to not reinstantiate client on hot reload and set up prisma types
 ```ts
 // src/app.d.ts
 import type { PrismaClient } from "@prisma/client";
@@ -159,3 +159,90 @@ if (process.env.NODE_ENV === "development") {
 
 export { prisma }
 ```
+
+```fish
+# commit
+git add .
+git commit -m "Created prisma client and prisma client type"
+```
+
+1. set up lucia server logic, lucia hooks and lucia types
+
+```ts
+// $lib/server/lucia.ts 
+
+import lucia from "lucia-auth";
+import prismaAdapter from "@lucia-auth/adapter-prisma";
+import { dev } from "$app/environment";
+
+export const auth = lucia({
+    adapter: prismaAdapter(prisma),
+    env: dev ? "DEV" : "PROD",
+    transformUserData: (userData) => {
+        return {
+            userId: userData.id,
+            username: userData.username,
+            email: userData.email
+        }
+    }
+})
+
+export type Auth = typeof auth;
+
+```
+
+```ts
+// src/routes/hooks.server.ts
+import { handleHooks } from "@lucia-auth/sveltekit";
+import { auth } from "../lib/server/lucia";
+import type { Handle } from "@sveltejs/kit";
+
+export const handle: Handle = handleHooks(auth)
+```
+
+```ts
+// src/app.d.ts
+import type { PrismaClient } from "@prisma/client";
+
+// for information about these interfaces
+declare global {
+	namespace App {
+		// interface Error {}
+		// interface Locals {}
+		// interface PageData {}
+		// interface Platform {}
+		interface Locals {
+			validate: import("@lucia-auth/sveltekit").Validate
+			validateUser: import("@lucia-auth/sveltekit").ValidateUser
+			setSesstion: import("@lucia-auth/sveltekit").SetSession
+		}
+	}
+	var prisma: PrismaClient
+
+	declare namespace Lucia {
+		type Auth = import("$lib/server/lucia").Auth
+		type UserAttributes = {
+			username: string
+			email: string
+		}
+	}
+}
+
+export {};
+```
+
+
+
+
+
+
+
+## TODO
+
+
+## Ressouces 
+- [Lucia prisma schema requirements](https://lucia-auth.com/learn/adapters/prisma)
+- [Lucia docs on Sveltekit integration](https://lucia-auth.com/sveltekit/start-here/getting-started)
+
+
+
