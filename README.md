@@ -12,16 +12,19 @@ npm install sass -D
 npm install -D @fontsource/poppins
 npm install prisma -D
 npm install lucia-auth @lucia-auth/sveltekit @lucia-auth/adapter-prisma
-
-# commit
-git init && add . && commit -m "Initial commit. Added dependencies for sveltekit, sass, fontsource, prisma, lucia & integrations for lucia with sveltekit and prisma."
 ```
 
 ...and create `README.md` to document process
 
+
 2. create schema
 ```fish
 npx prisma init --datasource-provider sqlite
+```
+
+``` js
+// .env
+DATABASE_URL="file:./dev.sqlite"
 ```
 
 ```prisma
@@ -121,11 +124,8 @@ model Task {
 
 ```fish
 npx prisma db push
-
-# commit
-git add prisma
-git commit -m "Created prisma schema and pushed it to db."
 ```
+
 
 3. create client to not reinstantiate client on hot reload and set up prisma types
 ```ts
@@ -160,45 +160,8 @@ if (process.env.NODE_ENV === "development") {
 export { prisma }
 ```
 
-```fish
-# commit
-git add .
-git commit -m "Created prisma client and prisma client type"
-```
 
-4. set up lucia server logic, lucia hook and lucia types
-
-```ts
-// $lib/server/lucia.ts 
-
-import lucia from "lucia-auth";
-import prismaAdapter from "@lucia-auth/adapter-prisma";
-import { dev } from "$app/environment";
-import { prisma } from "$lib/server/prisma"
-
-export const auth = lucia({
-    adapter: prismaAdapter(prisma),
-    env: dev ? "DEV" : "PROD",
-    transformUserData: (userData) => {
-        return {
-            userId: userData.id,
-            username: userData.username,
-            email: userData.email
-        }
-    }
-})
-
-export type Auth = typeof auth;
-```
-
-```ts
-// src/hooks.server.ts
-import { handleHooks } from "@lucia-auth/sveltekit";
-import { auth } from "$lib/server/lucia";
-import type { Handle } from "@sveltejs/kit";
-
-export const handle: Handle = handleHooks(auth)
-```
+4. set up types, hooks and server logic for lucia
 
 ```ts
 // src/app.d.ts
@@ -231,11 +194,38 @@ declare global {
 export {};
 ```
 
-```fish
-# commit
-git add .
-git commit -m "Created lucia logic, hook and types"
+```ts
+// src/hooks.server.ts
+import { handleHooks } from "@lucia-auth/sveltekit";
+import { auth } from "$lib/server/lucia";
+import type { Handle } from "@sveltejs/kit";
+
+export const handle: Handle = handleHooks(auth)
 ```
+
+```ts
+// $lib/server/lucia.ts 
+
+import lucia from "lucia-auth";
+import prismaAdapter from "@lucia-auth/adapter-prisma";
+import { dev } from "$app/environment";
+import { prisma } from "$lib/server/prisma"
+
+export const auth = lucia({
+    adapter: prismaAdapter(prisma),
+    env: dev ? "DEV" : "PROD",
+    transformUserData: (userData) => {
+        return {
+            userId: userData.id,
+            username: userData.username,
+            email: userData.email
+        }
+    }
+})
+
+export type Auth = typeof auth;
+```
+
 
 5. Create server user load on main +layout.server.ts
 
@@ -259,7 +249,13 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 </script>
 ```
 6. Created Register page and registered 1st user!
-7. 
+7. "Created login skeleton, implemented serverside logic and logged in"
+
+
+## Questions
+
+- change id in taglists to title for easier reference?
+- cannot create tags 
 
 
 
