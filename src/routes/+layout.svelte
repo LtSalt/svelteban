@@ -12,8 +12,15 @@
             </li>
         </ul>
         <ul>
+        {#if !data.user}
             <li><a href="/register">Register</a></li>
             <li><a href="/login">Login</a></li>
+        {:else}
+            <li>
+                <form action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+        {/if}
         </ul>
     </nav>
     

@@ -13,7 +13,7 @@ declare global {
 			setSession: import("@lucia-auth/sveltekit").SetSession
 		}
 	}
-	var prisma: PrismaClient
+	var __prisma: PrismaClient
 
 	declare namespace Lucia {
 		type Auth = import("$lib/server/lucia").Auth

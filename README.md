@@ -255,7 +255,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 ## Questions
 
 - change id in taglists to title for easier reference?
-- cannot create tags 
+- cannot create template tags for user. type error?
 
 
 
