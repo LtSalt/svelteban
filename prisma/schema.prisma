@@ -55,22 +55,22 @@ model Key {
 }
 
 model Board {
-  id       Int    @id @default(autoincrement())
-  title    String
-  user     User   @relation(fields: [username], references: [username])
-  username String
+  id     Int    @id @default(autoincrement())
+  title  String
+  user   User   @relation(fields: [userId], references: [username])
+  userId String
 
-  @@unique([username, title])
+  @@unique([userId, title])
 }
 
 model Taglist {
-  id       Int    @id @default(autoincrement())
-  title    String
-  tags     Tag[]
-  user     User   @relation(fields: [username], references: [username])
-  username String
+  id     Int    @id @default(autoincrement())
+  title  String
+  tags   Tag[]
+  user   User   @relation(fields: [userId], references: [username])
+  userId String
 
-  @@unique([username, title])
+  @@unique([userId, title])
 }
 
 model Tag {
@@ -78,15 +78,15 @@ model Tag {
   title     String
   taglist   Taglist @relation(fields: [taglistId], references: [id])
   taglistId Int
-  user      User    @relation(fields: [username], references: [username])
-  username  String
+  user      User    @relation(fields: [userId], references: [username])
+  userId    String
 
-  @@unique([username, title])
+  @@unique([userId, title])
 }
 
 model Task {
-  id       Int    @id @default(autoincrement())
-  title    String
-  user     User   @relation(fields: [username], references: [username])
-  username String
+  id     Int    @id @default(autoincrement())
+  title  String
+  user   User   @relation(fields: [userId], references: [username])
+  userId String
 }
