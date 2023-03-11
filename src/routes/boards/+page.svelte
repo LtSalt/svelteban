@@ -94,7 +94,7 @@
                 align-items: center;
 
                 &:focus {
-                    outline: thick double var(--clr-on-accent);
+                    outline: thick double var(--clr-primary);
                 }
 
             }
@@ -106,11 +106,12 @@
 
             > input {
                 width: 100%;
+                height: 100%;
                 margin-left: 4px;
                 border-radius: 0;
 
                 &:focus {
-                    outline: thick double var(--clr-on-accent);
+                    outline: thick double var(--clr-primary);
                 }
             }
         }

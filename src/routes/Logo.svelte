@@ -1,9 +1,9 @@
-<script>
-    export let fs;
-    export let gap;
-    export let length;
-    export let margin;
-    export let innerSpacing;
+<script lang="ts">
+    export let fs: string;
+    export let gap: string;
+    export let length: string;
+    export let margin: string;
+    export let innerSpacing: string;
 
 </script>
 
