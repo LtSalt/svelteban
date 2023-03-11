@@ -9,6 +9,8 @@
     $: boards = data.userData?.boards
     $: activeBoardId = data.userPreferences?.activeBoardId
 
+    let editing = false;
+
     async function setActiveBoard(userId: string, boardId: number) {
         const res = await fetch("/preferences/activeBoard", {
             method: "POST",
@@ -23,12 +25,13 @@
 <div id="sidebar">
     <h3>Boards</h3>
     <nav>
-        {#if boards}
+        {#if boards && userId}
             <ul>
                 {#each boards as board}
                     <li class:active={activeBoardId === board.id}>
-                        <form class="edit" action="?/editBoard" method="POST" use:enhance on:mouseup={setActiveBoard(userId, board.id)}>
-                            <input type="text" value={board.title} readonly>
+                        <form class="edit" action="?/editBoard&boardId={board.id}" method="POST" use:enhance on:mouseup={setActiveBoard(userId, board.id)}>
+                            <input type="text" value={board.title} name="boardTitle" readonly={editing === false}
+                                on:dblclick={() => editing = true}>
                         </form>
                         <form class="delete" action="" method="POST" use:enhance>
                             <input type="text" value={board.title} hidden>

@@ -1,6 +1,6 @@
 import { prisma } from "$lib/server/prisma";
-import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import { fail, redirect } from "@sveltejs/kit";
+import type { Actions, PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals}) => {
     const { user, session } = await locals.validateUser();
@@ -56,3 +56,28 @@ export const load: PageServerLoad = async ({ locals}) => {
     return { userPreferences, userData }
 };
 
+
+export const actions: Actions = {
+    editBoard: async({ url, request }) => {
+        const boardId = Number(url.searchParams.get("boardId"))
+        const { boardTitle } = Object.fromEntries(await request.formData());
+        console.log("editing board")
+
+        try {
+            await prisma.board.update({
+                where: {
+                    id: Number(boardId)
+                },
+                data: {
+                    title: String(boardTitle)
+                }
+            })
+        } catch(err) {
+            console.log(err)
+            return fail(500, { message: "Could not edit board title"})
+        }
+
+        return {status: 201}
+    },
+    // action: remove board
+};
