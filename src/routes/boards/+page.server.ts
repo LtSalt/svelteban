@@ -1,11 +1,12 @@
 import { prisma } from "$lib/server/prisma";
+import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals}) => {
     const { user, session } = await locals.validateUser();
 
     if (!(user && session)) {
-        return { status: 500 }
+        throw redirect(302, "/")
     }
 
     const userPreferences = await prisma.user.findUnique({
