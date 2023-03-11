@@ -1,12 +1,11 @@
 import { prisma } from "$lib/server/prisma";
-import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals }) => {
-    const { user, session } = await locals.validateUser()
+export const load: PageServerLoad = async ({ locals}) => {
+    const { user, session } = await locals.validateUser();
 
     if (!(user && session)) {
-        return {status: 200 }
+        return { status: 500 }
     }
 
     const userPreferences = await prisma.user.findUnique({
@@ -53,10 +52,6 @@ export const load: PageServerLoad = async ({ locals }) => {
         }
     })
 
-    if (!userData) {
-        return fail(500, { message: "No user data found in database"})
-    }
-
-    return { userData, userPreferences }
-    
+    return { userPreferences, userData }
 };
+
