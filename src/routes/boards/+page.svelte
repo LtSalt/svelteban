@@ -1,13 +1,16 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
+	import AddItem from '$lib/components/AddItem.svelte';
 	import { setContext } from 'svelte';
+    import { Trash2Icon } from "svelte-feather-icons";
 
     export let data;
     setContext("data", data)
 
     $: userId = data.user?.userId;
-    $: boards = data.userData?.boards
     $: activeBoardId = data.userPreferences?.activeBoardId
+    $: boards = data.userData?.boards
 
     let editing = false;
 
@@ -31,15 +34,21 @@
                     <li class:active={activeBoardId === board.id}>
                         <form class="edit" action="?/editBoard&boardId={board.id}" method="POST" use:enhance on:mouseup={setActiveBoard(userId, board.id)}>
                             <input type="text" value={board.title} name="boardTitle" readonly={editing === false}
-                                on:dblclick={() => editing = true}>
+                                on:dblclick={() => editing = true}
+                                on:focusout={() => editing = false}>
                         </form>
                         <form class="delete" action="" method="POST" use:enhance>
                             <input type="text" value={board.title} hidden>
-                            <button type="submit">X</button>
+                            <button type="submit">
+                                <Trash2Icon size=16></Trash2Icon>
+                            </button>
                         </form>
                     </li>
                 {/each}
             </ul>
+        {/if}
+        {#if userId}
+            <AddItem styles="" action="?/createBoard&userId={userId}"></AddItem>
         {/if}
     </nav>
 </div>

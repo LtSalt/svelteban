@@ -58,6 +58,34 @@ export const load: PageServerLoad = async ({ locals}) => {
 
 
 export const actions: Actions = {
+    createBoard: async({ request, url }) => {
+        const userId = String(url.searchParams.get("userId"))
+        const { boardTitle } = Object.fromEntries(await request.formData())
+        console.log("creating board")
+        console.log(userId)
+        console.log(boardTitle)
+
+        try {
+            await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    boards: {
+                        create: {
+                            title: String(boardTitle)
+                        }
+                    }
+                }
+            })
+        } catch(err) {
+            console.log(err)
+            return fail(500, { message: "Could not create new board"})
+        }
+
+        return {status: 201}
+    },
+
     editBoard: async({ url, request }) => {
         const boardId = Number(url.searchParams.get("boardId"))
         const { boardTitle } = Object.fromEntries(await request.formData());
