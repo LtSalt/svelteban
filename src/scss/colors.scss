@@ -1,0 +1,36 @@
+// light theme
+
+$lt-clr-primary: black;
+$lt-bg-primary: white;
+$lt-bg-accent: rgb(120, 84, 228);
+
+$light-theme: (
+    clr-primary: $lt-clr-primary,
+    clr-weak: lighten($lt-clr-primary, 20%),
+    clr-on-accent: darken($lt-bg-primary, 10%),
+    bg-primary: $lt-bg-primary,
+    bg-surface: mix($lt-bg-primary, black, 90%),
+    bg-input: mix($lt-bg-primary, black, 80%),
+    bg-accent-1: $lt-bg-accent,
+    bg-accent-2: darken($lt-bg-accent, 7%),
+    bg-accent-3: darken($lt-bg-accent, 7%),
+);
+
+
+// dark theme
+
+$dt-clr-primary: darken(white, 10%);
+$dt-bg-primary: lighten(black, 10%);
+$dt-bg-accent: rgb(120, 84, 228);;
+
+$dark-theme: (
+    clr-primary: $dt-clr-primary,
+    clr-weak: darken($dt-clr-primary, 20%),
+    bg-primary: $dt-bg-primary,
+    bg-surface: mix($dt-bg-primary, white, 90%),
+    bg-input: mix($dt-bg-primary, white, 75%),
+    bg-accent-1: $dt-bg-accent,
+    bg-accent-2: darken($dt-bg-accent, 7%),
+    bg-accent-3: darken($dt-bg-accent, 7%),
+)
+

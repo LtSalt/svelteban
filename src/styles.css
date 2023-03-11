@@ -1,0 +1,66 @@
+:root {
+  --clr-primary: black;
+  --clr-weak: #333333;
+  --clr-on-accent: #e6e6e6;
+  --bg-primary: white;
+  --bg-surface: #e6e6e6;
+  --bg-input: #cccccc;
+  --bg-accent-1: rgb(120, 84, 228);
+  --bg-accent-2: #6035df;
+  --bg-accent-3: #6035df;
+  --ff-primary: "Poppins", sans-serif;
+}
+:root:has(#dark-theme:checked) {
+  --clr-primary: #e6e6e6;
+  --clr-weak: #b3b3b3;
+  --bg-primary: #1a1a1a;
+  --bg-surface: #313131;
+  --bg-input: #535353;
+  --bg-accent-1: rgb(120, 84, 228);
+  --bg-accent-2: #6035df;
+  --bg-accent-3: #6035df;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--clr-primary);
+  background-color: var(--bg-primary);
+  font-family: var(--ff-primary);
+}
+
+input, button {
+  font-family: inherit;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+  font-size: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+}
+
+h3 {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--clr-weak);
+  letter-spacing: 0.06em;
+}
+
+/*# sourceMappingURL=styles.css.map */

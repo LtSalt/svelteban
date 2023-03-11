@@ -1,4 +1,7 @@
 <script>
+    import "@fontsource/poppins"
+    import "../styles.css"
+
     export let data;
 </script>
 
