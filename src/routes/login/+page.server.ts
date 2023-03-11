@@ -23,6 +23,6 @@ export const actions: Actions = {
                 console.log(err)
                 return fail(400, { message: "Could not log in user"})
             }
-            throw redirect(302, "/")
+            throw redirect(302, "/boards")
     }
 };
