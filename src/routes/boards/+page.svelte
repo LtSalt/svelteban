@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import AddItem from '$lib/components/AddItem.svelte';
 	import { setContext } from 'svelte';
     import { Trash2Icon } from "svelte-feather-icons";
@@ -22,6 +22,7 @@
                 "content-type": "preferences/json"
             }
         })
+        invalidateAll()
     }
 
     $: console.log(activeBoardId)
@@ -73,6 +74,7 @@
         cursor: pointer;
         display: flex;
         justify-content: space-between;
+        transition: background-color 0s;
 
         input {
             cursor: pointer;
