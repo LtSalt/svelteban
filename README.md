@@ -255,7 +255,11 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 ## Questions
 
 - change id in taglists to title for easier reference?
-- cannot create template tags for user. type error?****
+- cannot create template tags for user. type error?
+- modularity vs ease of state management
+  - If interacting with the server from a component, I have to 
+    - ... pass an update function to `use:enhance` when using form actions. 
+    - ... can't invalidate data when posting to an API endpoint. Instead, I would have to dispatch an event and call the API from the page.
 
 
 

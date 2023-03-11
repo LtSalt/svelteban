@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import { browser } from "$app/environment";
     import { SunIcon, MoonIcon } from "svelte-feather-icons"
+	import Logo from "./Logo.svelte";
 
     let theme: string;
     let themeChecked = false;
@@ -24,7 +25,9 @@
         <nav>
             <ul>
                 <li>
-                    <h1><a href="/">SvelteBan</a></h1>
+                    <a href="/">
+                        <Logo fs="1.7rem" gap="0.2rem" length="0.5rem" margin="0" innerSpacing="1rem"></Logo>
+                    </a>
                 </li>
             </ul>
             <ul>

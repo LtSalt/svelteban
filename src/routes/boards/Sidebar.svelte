@@ -1,18 +1,27 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import { invalidate, invalidateAll } from '$app/navigation';
 	import AddItem from '$lib/components/AddItem.svelte';
-	import { setContext } from 'svelte';
+	import { createEventDispatcher, getContext } from 'svelte';
     import { Trash2Icon } from "svelte-feather-icons";
+	import type { PageData } from './$types';
 
-    export let data;
-    setContext("data", data)
+    let data: PageData = getContext("data")
 
     $: userId = data.user?.userId;
     $: activeBoardId = data.userPreferences?.activeBoardId
     $: boards = data.userData?.boards
 
     let editing = false;
+
+    const dispatch =  createEventDispatcher();
+
+    function activeChange(boardId: number) {
+        dispatch("activeChange", {
+            boardId
+            }
+        )
+    }
 
     async function setActiveBoard(userId: string, boardId: number) {
         const res = await fetch("/preferences/activeBoard", {
@@ -22,7 +31,12 @@
                 "content-type": "preferences/json"
             }
         })
-        invalidateAll()
+    }
+
+    function refresh() {
+        return async({ update }) => {
+            update({ reset: false })
+        }
     }
 </script>
 
@@ -33,12 +47,14 @@
             <ul>
                 {#each boards as board}
                     <li class:active={activeBoardId === board.id}>
-                        <form class="edit" action="?/editBoard&boardId={board.id}" method="POST" use:enhance on:mouseup={setActiveBoard(userId, board.id)}>
+                        <form class="edit" action="?/editBoard&boardId={board.id}" method="POST" 
+                            use:enhance={refresh} on:mouseup={setActiveBoard(userId, board.id)}>
                             <input type="text" value={board.title} name="boardTitle" readonly={editing === false}
                                 on:dblclick={() => editing = true}
                                 on:focusout={() => editing = false}>
                         </form>
-                        <form class="delete" action="?/removeBoard&userId={userId}" method="POST" use:enhance>
+                        <form class="delete" action="?/removeBoard&userId={userId}" method="POST" 
+                            use:enhance={refresh}>
                             <input type="text" name="boardId" value={board.id} hidden>
                             <button type="submit">
                                 <Trash2Icon size=16></Trash2Icon>
@@ -49,17 +65,12 @@
             </ul>
         {/if}
         {#if userId}
-            <AddItem styles="margin-left: 16px;     " action="?/createBoard&userId={userId}"></AddItem>
+            <AddItem styles="" action="?/createBoard&userId={userId}"></AddItem>
         {/if}
     </nav>
 </div>
 
-
 <style lang="scss">
-
-    h3 {
-        margin: 8px 12px
-    }
 
     .active {
         background-color: var(--bg-accent-1);
@@ -67,11 +78,13 @@
     }
     #sidebar {
         background-color: var(--bg-surface);
-        width: 14rem;
+        width: 12rem;
+        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        // z-index: -99;
     }
 
     li {
-        // padding-inline: 12px 12px;
+        // padding-inline: 12px;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
@@ -79,23 +92,12 @@
 
         input {
             cursor: pointer;
-            padding-left: 12px
         }
 
         .delete {
-            display: flex;
-            align-items: center;
 
             button {
                 padding-inline: 12px;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-
-                &:focus {
-                    outline: thick double var(--clr-on-accent);
-                }
 
             }
             // width: 20px;
@@ -106,12 +108,6 @@
 
             > input {
                 width: 100%;
-                margin-left: 4px;
-                border-radius: 0;
-
-                &:focus {
-                    outline: thick double var(--clr-on-accent);
-                }
             }
         }
     }
