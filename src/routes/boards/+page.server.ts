@@ -60,8 +60,9 @@ export const load: PageServerLoad = async ({ locals}) => {
 export const actions: Actions = {
     createBoard: async({ request, url }) => {
         const userId = String(url.searchParams.get("userId"))
-        const { boardTitle } = Object.fromEntries(await request.formData())
+        const { itemTitle } = Object.fromEntries(await request.formData())
         console.log("creating board")
+        console.log(itemTitle)
 
         try {
             await prisma.user.update({
@@ -71,7 +72,7 @@ export const actions: Actions = {
                 data: {
                     boards: {
                         create: {
-                            title: String(boardTitle)
+                            title: String(itemTitle)
                         }
                     }
                 }

@@ -23,6 +23,8 @@
             }
         })
     }
+
+    $: console.log(activeBoardId)
 </script>
 
 <div id="sidebar">
@@ -68,8 +70,13 @@
 
     li {
         // padding-inline: 12px;
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
+
+        input {
+            cursor: pointer;
+        }
 
         .delete {
 
