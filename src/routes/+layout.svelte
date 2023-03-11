@@ -29,3 +29,20 @@
 
 
 <slot></slot>
+
+<style lang="scss">
+    header nav {
+        padding-inline: var(--pd-page-inline);
+        padding-block: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--bg-surface);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+
+        ul {
+            display: flex;
+            gap: 1em;
+        }
+    }
+</style>

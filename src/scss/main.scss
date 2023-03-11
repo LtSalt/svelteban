@@ -5,6 +5,7 @@
         --#{$key}: #{$value};
     }
     --ff-primary: "Poppins", sans-serif;
+    --pd-page-inline: 1rem;
 
     &:has(#dark-theme:checked) {
         @each $key, $value in $dark-theme {

@@ -9,6 +9,7 @@
   --bg-accent-2: #6035df;
   --bg-accent-3: #6035df;
   --ff-primary: "Poppins", sans-serif;
+  --pd-page-inline: 1rem;
 }
 :root:has(#dark-theme:checked) {
   --clr-primary: #e6e6e6;
