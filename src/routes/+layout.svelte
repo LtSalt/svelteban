@@ -1,6 +1,4 @@
 <script>
-	import Header from "./Header.svelte";
-
     export let data;
 </script>
 
@@ -16,6 +14,7 @@
             <li><a href="/register">Register</a></li>
             <li><a href="/login">Login</a></li>
         {:else}
+        <li><a href="/boards">Boards</a></li>
             <li>
                 <form action="/logout" method="POST">
                     <button type="submit">Logout</button>
@@ -23,7 +22,6 @@
         {/if}
         </ul>
     </nav>
-    
 </header>
 
 
