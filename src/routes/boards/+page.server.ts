@@ -62,8 +62,6 @@ export const actions: Actions = {
         const userId = String(url.searchParams.get("userId"))
         const { boardTitle } = Object.fromEntries(await request.formData())
         console.log("creating board")
-        console.log(userId)
-        console.log(boardTitle)
 
         try {
             await prisma.user.update({
@@ -107,5 +105,22 @@ export const actions: Actions = {
 
         return {status: 201}
     },
-    // action: remove board
+
+    removeBoard: async({ request }) => {
+        const { boardId } = Object.fromEntries(await request.formData())
+        console.log("removing board")
+
+        try {
+            await prisma.board.delete({
+                where: {
+                    id: Number(boardId)
+                }
+            })
+        } catch(err) {
+            console.log(err)
+            return fail(500, { message: "Could not remove board"})
+        }
+
+        return { status: 201 }
+    }
 };

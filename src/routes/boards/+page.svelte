@@ -37,8 +37,8 @@
                                 on:dblclick={() => editing = true}
                                 on:focusout={() => editing = false}>
                         </form>
-                        <form class="delete" action="" method="POST" use:enhance>
-                            <input type="text" value={board.title} hidden>
+                        <form class="delete" action="?/removeBoard&userId={userId}" method="POST" use:enhance>
+                            <input type="text" name="boardId" value={board.id} hidden>
                             <button type="submit">
                                 <Trash2Icon size=16></Trash2Icon>
                             </button>
