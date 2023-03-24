@@ -33,9 +33,6 @@ body {
   color: var(--clr-primary);
   background-color: var(--bg-primary);
   font-family: var(--ff-primary);
-  height: 100svh;
-  display: grid;
-  grid-template-rows: max-content 1fr;
 }
 
 input, button {

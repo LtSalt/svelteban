@@ -29,7 +29,7 @@
 <style lang="scss">
     input {
         background-color: var(--bg-input);
-        outline: thick double var(--clr-on-accent);
+        // outline: thick double var(--clr-on-accent);
     }
     button {
         margin-top: 8px;
@@ -37,7 +37,7 @@
         display: flex;
         
         &:focus {
-            outline: thick double var(--clr-on-accent);
+            // outline: thick double var(--clr-on-accent);
             }
     }
 </style>

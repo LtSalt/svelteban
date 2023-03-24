@@ -65,6 +65,11 @@
 <slot></slot>
 
 <style lang="scss">
+    :global(body) {
+        height: 100svh;
+        display: grid;
+        grid-template-rows: max-content 1fr;
+    }
     header nav {
         padding-inline: var(--pd-page-inline);
         padding-block: 0.5rem;
