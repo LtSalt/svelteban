@@ -9,3 +9,9 @@
     <input type="password" id="password" name="password" required>
     <button type="submit">Register</button>
 </form>
+
+<style>
+    input {
+        border: 1px solid black;
+    }
+</style>

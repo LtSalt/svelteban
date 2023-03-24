@@ -7,3 +7,9 @@
 
     <button type="submit">Log in</button>
 </form>
+
+<style>
+    input {
+        border: 1px solid black;
+    }
+</style>

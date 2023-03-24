@@ -2,11 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import AddItem from '$lib/components/AddItem.svelte';
-	// import { setContext } from 'svelte';
     import { Trash2Icon, ArrowLeftIcon, ArrowRightIcon } from "svelte-feather-icons";
 
     export let data;
-    // setContext("data", data)
 
     $: userId = data.user?.userId;
     $: activeBoardId = data.userPreferences?.activeBoardId
@@ -58,9 +56,6 @@
                 <AddItem styles="margin-left: 16px;     " action="?/createBoard&userId={userId}"></AddItem>
             {/if}
         </nav>
-        <!-- <div class="icon-container">
-            <ArrowLeftIcon size= 16></ArrowLeftIcon>
-        </div> -->
     </div>
     <div id="board">
         hallo
@@ -72,9 +67,7 @@
 
     .icon-container {
         padding-block: 4px;
-        // background-color: green;
         display: flex;
-        // align-items: center;
         justify-content: center;
         margin-top: auto;
     }
@@ -98,11 +91,6 @@
     #sidebar {
         background-color: var(--bg-surface);
         width: 12rem;
-
-        @media screen and (max-width: 600px) {
-            // transform: translateX( -12rem);
-            // background-color: white;
-        }
     }
 
     li {

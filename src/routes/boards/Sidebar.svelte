@@ -79,12 +79,9 @@
     #sidebar {
         background-color: var(--bg-surface);
         width: 12rem;
-        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        // z-index: -99;
     }
 
     li {
-        // padding-inline: 12px;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
@@ -100,7 +97,6 @@
                 padding-inline: 12px;
 
             }
-            // width: 20px;
         }
 
         .edit {
