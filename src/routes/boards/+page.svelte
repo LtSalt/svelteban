@@ -22,10 +22,6 @@
         })
         invalidateAll()
     }
-
-    $: console.log(data)
-
-
 </script>
 
 <main>
@@ -58,7 +54,7 @@
         </nav>
     </div>
     <div id="board">
-        hallo
+        <!-- TODO -->
     </div>
 </main>
 
